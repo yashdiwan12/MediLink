@@ -9,5 +9,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/seed.ts", "src/fix_ai.ts", "src/fix_questions.ts", "src/remove_duplicate.ts"]
 }
