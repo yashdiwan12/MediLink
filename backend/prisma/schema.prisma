@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  DOCTOR
+  PATIENT
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  doctorProfile DoctorProfile?
+  patientAppointments Appointment[] @relation("PatientAppointments")
+  doctorAppointments  Appointment[] @relation("DoctorAppointments")
+}
+
+model DoctorProfile {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+  specialization String
+  workingHours   Json     // e.g. { "monday": ["09:00-17:00"] }
+  slotDuration   Int      // in minutes
+  googleRefreshToken String?
+  leaves         Leave[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Leave {
+  id              String        @id @default(uuid())
+  doctorProfileId String
+  doctorProfile   DoctorProfile @relation(fields: [doctorProfileId], references: [id])
+  date            DateTime      @db.Date
+  reason          String?
+  createdAt       DateTime      @default(now())
+}
+
+model Appointment {
+  id                String            @id @default(uuid())
+  patientId         String
+  doctorId          String
+  patient           User              @relation("PatientAppointments", fields: [patientId], references: [id])
+  doctor            User              @relation("DoctorAppointments", fields: [doctorId], references: [id])
+  
+  appointmentDate   DateTime
+  startTime         String            // e.g., "10:30"
+  endTime           String            // e.g., "11:00"
+  status            AppointmentStatus @default(SCHEDULED)
+  googleEventId     String?           // For Google Calendar Sync
+
+  // Pre-visit details
+  patientName       String?
+  patientAge        Int?
+  patientGender     String?
+  patientPhone      String?
+  symptoms          String
+  urgencyLevel      String?           // Extracted via LLM (Low, Medium, High)
+  chiefComplaint    String?           // Extracted via LLM
+  suggestedQuestions Json?            // Array of questions via LLM
+
+  // Post-visit details
+  clinicalNotes     String?
+  patientSummary    String?           // Patient-friendly summary via LLM
+  medicationSchedule Json?            // Structured medication schedule
+
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+model EmailQueue {
+  id        String   @id @default(uuid())
+  to        String
+  subject   String
+  text      String
+  html      String?
+  status    String   @default("PENDING") // PENDING, FAILED, SENT
+  retries   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
