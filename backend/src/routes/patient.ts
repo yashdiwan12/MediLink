@@ -114,7 +114,7 @@ router.post('/appointments', async (req, res) => {
       });
 
       if (doctors.length === 0) {
-        throw new Error('No doctors found for this specialization: ' + aiSummary.recommendedSpecialization);
+        throw new Error('No doctors found for this specialization: ' + JSON.stringify(aiSummary));
       }
 
       // 2. Filter out doctors who are on leave
