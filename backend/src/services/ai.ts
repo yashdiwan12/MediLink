@@ -18,7 +18,7 @@ Respond STRICTLY with valid JSON in the following format, with no other text or 
   try {
     const response = await groq.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
-      model: 'openai/gpt-oss-20b', // Updated from decommissioned llama-3.3-70b-versatile
+      model: 'llama3-8b-8192', // Use valid Groq model
       temperature: 0,
       response_format: { type: 'json_object' }
     });
@@ -63,7 +63,7 @@ Respond STRICTLY with valid JSON in the following format, with no other text or 
   try {
     const response = await groq.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
-      model: 'openai/gpt-oss-20b',
+      model: 'llama3-8b-8192',
       temperature: 0,
       response_format: { type: 'json_object' }
     });

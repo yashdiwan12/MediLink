@@ -109,7 +109,7 @@ router.post('/appointments', async (req, res) => {
     const bookingResult = await prisma.$transaction(async (tx: any) => {
       // 1. Find all doctors for the requested specialization
       const doctors = await tx.doctorProfile.findMany({
-        where: { specialization: { equals: String(aiSummary.recommendedSpecialization), mode: 'insensitive' } },
+        where: { specialization: { contains: String(aiSummary.recommendedSpecialization).trim(), mode: 'insensitive' } },
         include: { leaves: { where: { date } } }
       });
 
