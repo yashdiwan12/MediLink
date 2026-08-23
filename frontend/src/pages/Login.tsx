@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../api';
-import { ShieldCheck, BrainCircuit, CalendarCheck } from 'lucide-react';
+import { ShieldCheck, BrainCircuit, CalendarCheck, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
   const { login } = useAuth();
@@ -9,6 +9,7 @@ const Login = () => {
   const [form, setForm] = useState({ email: '', password: '', name: '', role: 'PATIENT' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,8 +123,29 @@ const Login = () => {
                   <label>Password</label>
                   {isLogin && <a href="#" style={{ fontSize: '0.8rem', color: 'var(--blue)', textDecoration: 'none', fontWeight: 600 }}>Forgot password?</a>}
                 </div>
-                <input className="form-control" type="password" required placeholder="••••••••"
-                  value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} />
+                <div style={{ position: 'relative' }}>
+                  <input
+                    className="form-control"
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    placeholder="••••••••"
+                    value={form.password}
+                    onChange={e => setForm({ ...form, password: e.target.value })}
+                    style={{ paddingRight: '44px' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(p => !p)}
+                    style={{
+                      position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
+                      background: 'none', border: 'none', cursor: 'pointer',
+                      color: 'var(--text-sub)', display: 'flex', alignItems: 'center', padding: 0
+                    }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
               
               {!isLogin && (
