@@ -36,15 +36,10 @@ Respond STRICTLY with valid JSON in the following format, with no other text or 
     }
 
     return parsed;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Groq AI Error (Pre-visit):', error);
-    // Graceful fallback
-    return {
-      urgencyLevel: 'Unknown',
-      chiefComplaint: 'Failed to analyze symptoms.',
-      suggestedQuestions: [],
-      recommendedSpecialization: 'General Medicine'
-    };
+    // REMOVED GRACEFUL FALLBACK FOR DEBUGGING
+    throw new Error(`AI Triage Failed: ${error.message || 'Unknown error'}`);
   }
 };
 
