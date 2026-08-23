@@ -114,7 +114,7 @@ router.post('/appointments', async (req, res) => {
       });
 
       if (doctors.length === 0) {
-        throw new Error('No doctors found for this specialization');
+        throw new Error('No doctors found for this specialization: ' + aiSummary.recommendedSpecialization);
       }
 
       // 2. Filter out doctors who are on leave
@@ -214,11 +214,11 @@ router.post('/appointments', async (req, res) => {
     });
   } catch (error: any) {
     console.error('Booking Error:', error.message);
-      if ([
-        'No doctors found for this specialization', 
-        'All doctors in this specialization are on leave on this date', 
-        'No doctors are available for this specialization at the selected time'
-      ].includes(error.message) || error.message.startsWith('AI Triage Failed:')) {
+      if (
+        error.message.startsWith('No doctors found for this specialization') ||
+        error.message.startsWith('AI Triage Failed:') ||
+        ['All doctors in this specialization are on leave on this date', 'No doctors are available for this specialization at the selected time'].includes(error.message)
+      ) {
         res.status(400).json({ error: error.message });
       } else {
         res.status(500).json({ error: 'Internal server error' });
