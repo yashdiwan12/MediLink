@@ -18,7 +18,7 @@ Respond STRICTLY with valid JSON in the following format, with no other text or 
   try {
     const response = await groq.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
-      model: 'llama3-8b-8192', // Use valid Groq model
+      model: 'llama-3.1-8b-instant', // Use active Groq model
       temperature: 0,
       response_format: { type: 'json_object' }
     });
@@ -58,7 +58,7 @@ Respond STRICTLY with valid JSON in the following format, with no other text or 
   try {
     const response = await groq.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
-      model: 'llama3-8b-8192',
+      model: 'llama-3.1-8b-instant', // Use active Groq model
       temperature: 0,
       response_format: { type: 'json_object' }
     });
