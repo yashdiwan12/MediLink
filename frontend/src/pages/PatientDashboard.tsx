@@ -46,7 +46,7 @@ const PatientDashboard = () => {
   };
 
   return (
-    <div className="fade-in">
+    <div className="px-gutter-md md:px-margin-container max-w-[1140px] mx-auto w-full py-8 fade-in">
       <div style={{ marginBottom: 28 }}>
         <h1 className="page-title">Book an Appointment</h1>
         <p className="page-subtitle">Describe your symptoms, and our AI will automatically assign you the right specialist.</p>
@@ -103,8 +103,20 @@ const PatientDashboard = () => {
               <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <Clock size={16} /> Time
               </label>
-              <input className="form-control" type="time" required
-                value={form.time} onChange={e => setForm({ ...form, time: e.target.value })} />
+              <select className="form-control" required
+                value={form.time} onChange={e => setForm({ ...form, time: e.target.value })}>
+                <option value="">Select a time</option>
+                {Array.from({ length: 21 }).map((_, i) => {
+                  const hour = Math.floor(i / 2) + 8;
+                  const mins = i % 2 === 0 ? '00' : '30';
+                  const isPM = hour >= 12;
+                  const displayHour = hour > 12 ? hour - 12 : hour;
+                  const ampm = isPM ? 'PM' : 'AM';
+                  const timeValue = `${String(hour).padStart(2, '0')}:${mins}`;
+                  const timeDisplay = `${displayHour}:${mins} ${ampm}`;
+                  return <option key={timeValue} value={timeValue}>{timeDisplay}</option>;
+                })}
+              </select>
             </div>
           </div>
 

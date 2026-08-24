@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --blue: #2563EB;
-  --blue-light: #EFF6FF;
-  --blue-dark: #1D4ED8;
-  --orange: #F97316;
+  --blue: #004ac6;
+  --blue-light: #eff4ff;
+  --blue-dark: #00174b;
+  --orange: #F59E0B;
   --orange-light: #FFF7ED;
   --bg: #F9FAFB;
   --white: #FFFFFF;

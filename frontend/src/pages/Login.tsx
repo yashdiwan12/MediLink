@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../api';
-import { ShieldCheck, BrainCircuit, CalendarCheck, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
   const { login } = useAuth();
@@ -28,151 +27,197 @@ const Login = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', background: 'var(--bg)' }}>
-      {/* Left Side - Marketing/Branding (Hidden on mobile) */}
-      <div style={{
-        flex: 1,
-        background: 'linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%)',
-        color: 'white',
-        padding: '60px 40px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        position: 'relative',
-        overflow: 'hidden'
-      }} className="login-hero">
-        
-        {/* Background decorative elements */}
-        <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '400px', height: '400px', background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }}></div>
-        <div style={{ position: 'absolute', bottom: '10%', right: '-20%', width: '600px', height: '600px', background: 'rgba(255,255,255,0.03)', borderRadius: '50%' }}></div>
-
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <span style={{ fontWeight: 800, fontSize: '1.5rem', letterSpacing: '-0.5px' }}>MediLink</span>
-        </div>
-
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '500px', margin: 'auto 0' }}>
-          <h1 style={{ fontSize: '3rem', fontWeight: 800, lineHeight: 1.1, marginBottom: '24px', letterSpacing: '-0.02em' }}>
-            Healthcare, <br />Reimagined.
-          </h1>
-          <p style={{ fontSize: '1.1rem', opacity: 0.9, lineHeight: 1.6, marginBottom: '40px' }}>
-            Join thousands of patients and doctors experiencing seamless scheduling, AI-powered insights, and automated care management.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div style={{ background: 'rgba(255,255,255,0.1)', padding: '10px', borderRadius: '10px' }}><CalendarCheck size={20} /></div>
-              <div>
-                <div style={{ fontWeight: 600 }}>Smart Scheduling</div>
-                <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>No more double-bookings or waiting on hold.</div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div style={{ background: 'rgba(255,255,255,0.1)', padding: '10px', borderRadius: '10px' }}><BrainCircuit size={20} /></div>
-              <div>
-                <div style={{ fontWeight: 600 }}>AI Pre-Visit Briefs</div>
-                <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>Doctors get summaries before you even walk in.</div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div style={{ background: 'rgba(255,255,255,0.1)', padding: '10px', borderRadius: '10px' }}><ShieldCheck size={20} /></div>
-              <div>
-                <div style={{ fontWeight: 600 }}>Secure & Confidential</div>
-                <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>Your health data is protected with enterprise-grade security.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Side - Form */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px', background: 'var(--bg)' }}>
-        <div className="fade-in" style={{ width: '100%', maxWidth: 440 }}>
+    <div className="bg-surface-background min-h-screen flex text-on-surface antialiased">
+      <div className="flex-1 flex flex-col md:flex-row w-full">
+        {/* Left Side: Hero Section */}
+        <div 
+          className="hidden md:flex flex-col w-1/2 p-12 lg:p-24 text-on-primary relative overflow-hidden shrink-0"
+          style={{
+            backgroundColor: '#2563eb',
+            backgroundImage: 'radial-gradient(circle at 100% 0%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 0% 100%, #1d4ed8 0%, transparent 50%)'
+          }}
+        >
+          {/* Decorative Elements */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3"></div>
           
-          {/* Mobile Logo */}
-          <div className="mobile-logo" style={{ display: 'none', marginBottom: '32px', textAlign: 'center' }}>
-            <span style={{ fontWeight: 800, fontSize: '1.8rem', color: 'var(--blue)', letterSpacing: '-0.5px' }}>MediLink</span>
-          </div>
-
-          <div className="card" style={{ padding: '40px 32px', boxShadow: 'var(--shadow-md)', borderRadius: '16px', border: 'none' }}>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: 8, color: 'var(--text)' }}>
-              {isLogin ? 'Welcome back' : 'Create an account'}
-            </h2>
-            <p style={{ color: 'var(--text-sub)', fontSize: '0.95rem', marginBottom: 32 }}>
-              {isLogin ? 'Enter your details to access your portal.' : 'Get started with your free account today.'}
+          <div className="relative z-10 flex flex-col h-full justify-center max-w-lg mx-auto">
+            <div className="mb-16">
+              <span className="font-headline-md text-headline-md font-bold tracking-tight">MediLink</span>
+            </div>
+            
+            <h1 className="font-display-lg text-display-lg mb-6">
+              Healthcare,<br/>Reimagined.
+            </h1>
+            
+            <p className="font-body-lg text-body-lg text-on-primary/90 mb-16 max-w-md">
+              Join thousands of patients and doctors experiencing seamless scheduling, AI-powered insights, and automated care management.
             </p>
-
-            {error && <div className="alert alert-error">{error}</div>}
-
-            <form onSubmit={handleSubmit}>
+            
+            <div className="space-y-8">
+              {/* Feature 1 */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20">
+                  <span className="material-symbols-outlined text-white">calendar_month</span>
+                </div>
+                <div>
+                  <h3 className="font-label-md text-label-md text-white mb-1">Smart Scheduling</h3>
+                  <p className="font-body-md text-body-md text-on-primary/80">No more double-bookings or waiting on hold.</p>
+                </div>
+              </div>
+              
+              {/* Feature 2 */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20">
+                  <span className="material-symbols-outlined text-white">psychology</span>
+                </div>
+                <div>
+                  <h3 className="font-label-md text-label-md text-white mb-1">AI Pre-Visit Briefs</h3>
+                  <p className="font-body-md text-body-md text-on-primary/80">Doctors get summaries before you even walk in.</p>
+                </div>
+              </div>
+              
+              {/* Feature 3 */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20">
+                  <span className="material-symbols-outlined text-white">security</span>
+                </div>
+                <div>
+                  <h3 className="font-label-md text-label-md text-white mb-1">Secure &amp; Confidential</h3>
+                  <p className="font-body-md text-body-md text-on-primary/80">Your health data is protected with enterprise-grade security.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Right Side: Login Card */}
+        <div className="flex-1 flex items-center justify-center p-8 bg-surface-background">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-[0px_4px_6px_-1px_rgba(0,0,0,0.05)] border border-outline-variant/30 p-8 sm:p-10">
+            <div className="mb-8">
+              <h2 className="font-headline-lg text-headline-lg text-on-surface mb-2">
+                {isLogin ? 'Welcome back' : 'Create an account'}
+              </h2>
+              <p className="font-body-md text-body-md text-on-surface-variant">
+                {isLogin ? 'Enter your details to access your portal.' : 'Get started with your free account today.'}
+              </p>
+            </div>
+            
+            {error && (
+              <div className="mb-6 p-4 bg-error-container text-on-error-container rounded-lg font-body-md text-sm">
+                {error}
+              </div>
+            )}
+            
+            <form className="space-y-6" onSubmit={handleSubmit}>
               {!isLogin && (
-                <div className="form-group">
-                  <label>Full Name</label>
-                  <input className="form-control" type="text" required placeholder="John Doe"
-                    value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+                <div>
+                  <label className="block font-label-md text-label-md text-on-surface mb-2 uppercase tracking-wide text-xs" htmlFor="name">
+                    Full Name
+                  </label>
+                  <input 
+                    id="name"
+                    type="text" 
+                    required 
+                    placeholder="John Doe"
+                    value={form.name} 
+                    onChange={e => setForm({ ...form, name: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-body-md text-body-md" 
+                  />
                 </div>
               )}
-              
-              <div className="form-group">
-                <label>Email Address</label>
-                <input className="form-control" type="email" required placeholder="you@example.com"
-                  value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+
+              <div>
+                <label className="block font-label-md text-label-md text-on-surface mb-2 uppercase tracking-wide text-xs" htmlFor="email">
+                  Email Address
+                </label>
+                <input 
+                  id="email"
+                  type="email" 
+                  required 
+                  placeholder="you@example.com"
+                  value={form.email} 
+                  onChange={e => setForm({ ...form, email: e.target.value })}
+                  className="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-body-md text-body-md" 
+                />
               </div>
               
-              <div className="form-group">
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <label>Password</label>
-                  {isLogin && <a href="#" style={{ fontSize: '0.8rem', color: 'var(--blue)', textDecoration: 'none', fontWeight: 600 }}>Forgot password?</a>}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block font-label-md text-label-md text-on-surface uppercase tracking-wide text-xs" htmlFor="password">
+                    Password
+                  </label>
+                  {isLogin && (
+                    <a href="#" className="font-label-md text-label-md text-primary hover:text-primary-fixed-variant transition-colors text-sm">
+                      Forgot password?
+                    </a>
+                  )}
                 </div>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    className="form-control"
+                <div className="relative">
+                  <input 
+                    id="password"
                     type={showPassword ? 'text' : 'password'}
-                    required
+                    required 
                     placeholder="••••••••"
                     value={form.password}
                     onChange={e => setForm({ ...form, password: e.target.value })}
-                    style={{ paddingRight: '44px' }}
+                    className="w-full px-4 py-3 pr-12 rounded-lg border border-outline-variant bg-surface focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-body-md text-body-md" 
                   />
-                  <button
-                    type="button"
+                  <button 
+                    type="button" 
                     onClick={() => setShowPassword(p => !p)}
-                    style={{
-                      position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
-                      background: 'none', border: 'none', cursor: 'pointer',
-                      color: 'var(--text-sub)', display: 'flex', alignItems: 'center', padding: 0
-                    }}
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-on-surface-variant hover:text-on-surface transition-colors"
                   >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    <span className="material-symbols-outlined text-[20px]">
+                      {showPassword ? 'visibility_off' : 'visibility'}
+                    </span>
                   </button>
                 </div>
               </div>
-              
+
               {!isLogin && (
-                <div className="form-group">
-                  <label>I am signing up as a</label>
-                  <select className="form-control" value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}>
+                <div>
+                  <label className="block font-label-md text-label-md text-on-surface mb-2 uppercase tracking-wide text-xs" htmlFor="role">
+                    I am signing up as a
+                  </label>
+                  <select 
+                    id="role"
+                    value={form.role} 
+                    onChange={e => setForm({ ...form, role: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-outline-variant bg-surface focus:ring-2 focus:ring-primary focus:border-primary transition-colors font-body-md text-body-md"
+                  >
                     <option value="PATIENT">Patient</option>
                     <option value="DOCTOR">Doctor</option>
                     <option value="ADMIN">Administrator</option>
                   </select>
                 </div>
               )}
-
-              <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '12px', marginTop: 12, fontSize: '1rem' }} disabled={loading}>
-                {loading ? <span className="spinner" /> : (isLogin ? 'Sign In' : 'Create Account')}
+              
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full py-3 px-4 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-on-primary-fixed-variant transition-colors shadow-sm flex justify-center items-center"
+              >
+                {loading ? (
+                  <span className="material-symbols-outlined animate-spin">progress_activity</span>
+                ) : (
+                  isLogin ? 'Sign In' : 'Create Account'
+                )}
               </button>
             </form>
-
-            <div className="divider" style={{ margin: '28px 0' }} />
             
-            <p style={{ textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-sub)' }}>
-              {isLogin ? "Don't have an account? " : "Already have an account? "}
-              <button onClick={() => { setIsLogin(!isLogin); setError(''); }}
-                style={{ border: 'none', background: 'none', color: 'var(--blue)', fontWeight: 700, cursor: 'pointer', fontSize: '0.9rem', fontFamily: 'Inter, sans-serif' }}>
-                {isLogin ? 'Sign up' : 'Log in'}
-              </button>
-            </p>
+            <div className="mt-8 pt-6 border-t border-outline-variant/30 text-center">
+              <p className="font-body-md text-body-md text-on-surface-variant">
+                {isLogin ? "Don't have an account? " : "Already have an account? "}
+                <button 
+                  type="button"
+                  onClick={() => { setIsLogin(!isLogin); setError(''); }}
+                  className="font-label-md text-label-md text-primary hover:text-primary-fixed-variant transition-colors"
+                >
+                  {isLogin ? 'Sign up' : 'Sign in'}
+                </button>
+              </p>
+            </div>
           </div>
         </div>
       </div>

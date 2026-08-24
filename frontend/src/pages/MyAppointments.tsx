@@ -57,7 +57,7 @@ const MyAppointments = () => {
   if (loading) return <p style={{ color: 'var(--text-muted)', marginTop: 40 }}>Loading appointments...</p>;
 
   return (
-    <div className="fade-in">
+    <div className="px-gutter-md md:px-margin-container max-w-[1140px] mx-auto w-full py-8 fade-in">
       <div style={{ marginBottom: 28 }}>
         <h1 className="page-title">My Appointments</h1>
         <p className="page-subtitle">Track your upcoming and past visits</p>
