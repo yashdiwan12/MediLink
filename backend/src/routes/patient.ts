@@ -39,12 +39,27 @@ router.get('/doctors', async (req, res) => {
 router.get('/appointments', async (req, res) => {
   const patientId = req.user!.id;
   try {
+    // Automatically delete appointments if more than 10
+    const allAppts = await prisma.appointment.findMany({
+      where: { patientId },
+      orderBy: { appointmentDate: 'desc' },
+      select: { id: true }
+    });
+
+    if (allAppts.length > 10) {
+      const idsToDelete = allAppts.slice(10).map(a => a.id);
+      await prisma.appointment.deleteMany({
+        where: { id: { in: idsToDelete } }
+      });
+    }
+
     const appointments = await prisma.appointment.findMany({
       where: { patientId },
       include: {
         doctor: { select: { id: true, name: true } },
       },
       orderBy: { appointmentDate: 'desc' },
+      take: 10,
     });
     res.status(200).json({ appointments });
   } catch (error) {
@@ -205,6 +220,23 @@ router.post('/appointments', async (req, res) => {
         'New Appointment Booked',
         `Hello Dr. ${doctorUser.name},\n\nA new appointment has been booked.\nPatient: ${patientName || 'Patient'}\nDate: ${appointmentDate}\nTime: ${startTime}\nChief Complaint: ${aiSummary.chiefComplaint}\nUrgency: ${aiSummary.urgencyLevel}`
       );
+    }
+
+    // Automatically delete appointments if more than 10 for this patient
+    try {
+      const allAppts = await prisma.appointment.findMany({
+        where: { patientId },
+        orderBy: { appointmentDate: 'desc' },
+        select: { id: true }
+      });
+      if (allAppts.length > 10) {
+        const idsToDelete = allAppts.slice(10).map(a => a.id);
+        await prisma.appointment.deleteMany({
+          where: { id: { in: idsToDelete } }
+        });
+      }
+    } catch (cleanupErr) {
+      console.error('Failed to cleanup old appointments:', cleanupErr);
     }
 
     res.status(201).json({ 
